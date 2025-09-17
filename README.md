@@ -1,6 +1,6 @@
 # React Native Google Sign-In with Firebase Authentication: Step-by-Step
 
-Read the full tutorial [here]().
+Read the full tutorial [here](https://www.djamware.com/post/68ca2e9df3628013ea7b2d70/react-native-google-signin-with-firebase-authentication-stepbystep).
 
 > **Note**: Make sure you have completed the [Set Up Your Environment](https://reactnative.dev/docs/set-up-your-environment) guide before proceeding.
 
