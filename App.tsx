@@ -1,45 +1,46 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
+import React, { useContext } from 'react';
+import { View, Text, Button, Image, ActivityIndicator } from 'react-native';
+import { AuthProvider, AuthContext } from './src/context/AuthContext';
 
-import { NewAppScreen } from '@react-native/new-app-screen';
-import { StatusBar, StyleSheet, useColorScheme, View } from 'react-native';
-import {
-  SafeAreaProvider,
-  useSafeAreaInsets,
-} from 'react-native-safe-area-context';
+const HomeScreen: React.FC = () => {
+  const { user, loading, login, logout } = useContext(AuthContext);
 
-function App() {
-  const isDarkMode = useColorScheme() === 'dark';
-
-  return (
-    <SafeAreaProvider>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <AppContent />
-    </SafeAreaProvider>
-  );
-}
-
-function AppContent() {
-  const safeAreaInsets = useSafeAreaInsets();
-
-  return (
-    <View style={styles.container}>
-      <NewAppScreen
-        templateFileName="App.tsx"
-        safeAreaInsets={safeAreaInsets}
+  if (loading) {
+    return (
+      <ActivityIndicator
+        size="large"
+        style={{ flex: 1, justifyContent: 'center' }}
       />
+    );
+  }
+
+  return (
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      {user ? (
+        <>
+          <Text>Welcome, {user.name}</Text>
+          {user.photo && (
+            <Image
+              source={{ uri: user.photo }}
+              style={{ width: 80, height: 80, borderRadius: 40, margin: 10 }}
+            />
+          )}
+          <Text>{user.email}</Text>
+          <Button title="Logout" onPress={logout} />
+        </>
+      ) : (
+        <Button title="Sign in with Google" onPress={login} />
+      )}
     </View>
   );
-}
+};
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-});
+const App: React.FC = () => {
+  return (
+    <AuthProvider>
+      <HomeScreen />
+    </AuthProvider>
+  );
+};
 
 export default App;
